@@ -1,0 +1,13 @@
+{
+  "name": "jira-demo",
+  "version": "1.0.0",
+  "description": "Example of row-level-security based project",
+  "main": "app.js",
+  "author": "Volodymyr.Sevastianov <voviksev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "pg": "^7.17.1"
+  }
+}
