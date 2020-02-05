@@ -1,10 +1,11 @@
 %syntax-version=1.0.0
 %project=jira-demo
 
-tasks 2020-01-28T18:27:52Z System Administrator <root@MacBook-Air-admin-2.local> # add tasks table
+# roles 2020-02-03T18:54:04Z System Administrator <root@MacBook-Air-admin-2.local> # Roles needed for demonstartion
+companies 2020-01-28T18:36:19Z System Administrator <root@MacBook-Air-admin-2.local> # add companies table
 users 2020-01-28T18:28:10Z System Administrator <root@MacBook-Air-admin-2.local> # add users table
 projects 2020-01-28T18:28:25Z System Administrator <root@MacBook-Air-admin-2.local> # add projects table
-companies 2020-01-28T18:36:19Z System Administrator <root@MacBook-Air-admin-2.local> # add companies table
+tasks 2020-01-28T18:27:52Z System Administrator <root@MacBook-Air-admin-2.local> # add tasks table
 companies_ownership 2020-01-28T19:17:51Z System Administrator <root@MacBook-Air-admin-2.local> # add companies_ownership table
 users_tasks 2020-01-28T20:52:26Z System Administrator <root@MacBook-Air-admin-2.local> # add users_tasks table
 users_projects 2020-01-28T21:11:28Z System Administrator <root@MacBook-Air-admin-2.local> # add users_projects table
