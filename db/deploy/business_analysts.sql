@@ -18,7 +18,7 @@ FOR ALL
 TO owner
 USING (
   project_id = ANY (
-    (SELECT array_agg(id)
+    (SELECT array_agg(projects.id)
     FROM projects, companies
     WHERE companies.id = projects.company_id
     AND companies.owner_id = NULLIF(current_setting('session.accountID', TRUE), '')::INTEGER)::INTEGER[]
@@ -26,7 +26,7 @@ USING (
 )
 WITH CHECK (
   project_id = ANY (
-    (SELECT array_agg(id)
+    (SELECT array_agg(projects.id)
     FROM projects, companies
     WHERE companies.id = projects.company_id
     AND companies.owner_id = NULLIF(current_setting('session.accountID', TRUE), '')::INTEGER)::INTEGER[]
@@ -42,14 +42,14 @@ USING (
   project_id = ANY (
     (SELECT array_agg(project_id)
     FROM project_managers
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '')::INTEGER)
+    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '')::INTEGER)::INTEGER[]
   )
 )
 WITH CHECK (
   project_id = ANY (
     (SELECT array_agg(project_id)
     FROM project_managers
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '')::INTEGER)
+    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '')::INTEGER)::INTEGER[]
   )
 );
 
