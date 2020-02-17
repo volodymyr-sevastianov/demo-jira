@@ -5,7 +5,7 @@ BEGIN;
 CREATE TABLE IF NOT EXISTS users_projects (
   id INTEGER PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users (id),
-  project_id INTEGER NOT NULL REFERENCES projects (id)
+  project_id INTEGER NOT NULL REFERENCES projects (id),
   is_project_owner BOOLEAN
 );
 

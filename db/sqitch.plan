@@ -9,3 +9,7 @@ tasks 2020-01-28T18:27:52Z System Administrator <root@MacBook-Air-admin-2.local>
 companies_ownership 2020-01-28T19:17:51Z System Administrator <root@MacBook-Air-admin-2.local> # add companies_ownership table
 users_tasks 2020-01-28T20:52:26Z System Administrator <root@MacBook-Air-admin-2.local> # add users_tasks table
 users_projects 2020-01-28T21:11:28Z System Administrator <root@MacBook-Air-admin-2.local> # add users_projects table
+developers 2020-02-09T19:18:09Z System Administrator <root@MacBook-Air-admin-2.local> # add table developers
+business_analysts 2020-02-09T19:19:03Z System Administrator <root@MacBook-Air-admin-2.local> # add table business_analysts
+quality_assurances 2020-02-09T19:20:00Z System Administrator <root@MacBook-Air-admin-2.local> # add table quality_assurances
+project_managers 2020-02-09T19:20:25Z System Administrator <root@MacBook-Air-admin-2.local> # add table project_managers
