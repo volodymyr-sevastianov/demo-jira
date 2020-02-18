@@ -3,7 +3,7 @@
 BEGIN;
 
 CREATE TABLE IF NOT EXISTS users_tasks (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users (id),
   task_id INTEGER NOT NULL REFERENCES tasks (id)
 );
