@@ -13,15 +13,17 @@ DECLARE
   user public.users;
   firstname TEXT := userObject ->> 'firstname';
   lastname TEXT := userObject ->> 'lastname';
+  company_id INTEGER := userObject ->> 'company_id';
 BEGIN
   IF firstname IS NULL OR lastname IS NULL
   THEN 
-    RAISE EXCEPTION 'You need supply both firstname and lastname!';
+    RAISE EXCEPTION 'You must supply both firstname and lastname arguments!';
   END IF;
 
-  INSERT INTO public.users(firstname, lastname)
+  INSERT INTO public.users(firstname, lastname, company_id)
   VALUES (userObject ->> 'firstname',
-          userObject ->> 'lastname') RETURNING *
+          userObject ->> 'lastname',
+          (userObject ->> 'company_id') :: INTEGER) RETURNING *
     INTO user;
   
   RETURN user;

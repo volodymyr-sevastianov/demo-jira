@@ -44,18 +44,30 @@ WITH CHECK (
  )
 );
 
-DROP POLICY IF EXISTS authorized_select_business_analyst ON companies;
-CREATE POLICY authorized_select_business_analyst
+DROP POLICY IF EXISTS authorized_select ON companies;
+CREATE POLICY authorized_select
 ON companies
 AS PERMISSIVE
 FOR SELECT
-TO business_analyst
+TO business_analyst, developer, project_manager, quality_assurance
 USING (
  id = ANY (
    (SELECT array_agg(company_id)
    FROM users
    WHERE id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
  )
+);
+
+
+
+DROP POLICY IF EXISTS authorized_insert ON companies;
+CREATE POLICY authorized_insert
+ON companies
+AS PERMISSIVE
+FOR INSERT
+TO developer, quality_assurance, business_analyst, project_owner, project_manager
+WITH CHECK (
+ owner_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
 );
 
 COMMIT;

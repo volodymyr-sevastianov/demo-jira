@@ -10,3 +10,6 @@ companies_ownership 2020-01-28T19:17:51Z System Administrator <root@MacBook-Air-
 users_tasks 2020-01-28T20:52:26Z System Administrator <root@MacBook-Air-admin-2.local> # add users_tasks table
 users_projects 2020-01-28T21:11:28Z System Administrator <root@MacBook-Air-admin-2.local> # add users_projects table
 functions/create_user 2020-02-18T10:00:52Z Volodymyr,,, <volodymyr@relevant-MS-7B24> # Functions for registration
+functions/create_copmany 2020-02-28T10:34:51Z Volodymyr,,, <volodymyr@relevant-MS-7B24> # Add function for creating companies
+functions/create_project 2020-02-28T11:42:20Z Volodymyr,,, <volodymyr@relevant-MS-7B24> # Add function for creating projects
+functions/create_task 2020-02-28T12:49:28Z Volodymyr,,, <volodymyr@relevant-MS-7B24> # Add function for creating tasks

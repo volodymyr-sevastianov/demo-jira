@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS companies (
     name TEXT NOT NULL,
     owner_id INTEGER
 );
-GRANT SELECT, INSERT ON TABLE public.companies TO anonymous;
+GRANT SELECT ON TABLE public.companies TO anonymous;
 GRANT SELECT ON TABLE public.companies TO developer;
 GRANT SELECT ON TABLE public.companies TO quality_assurance;
 GRANT SELECT ON TABLE public.companies TO project_manager;
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS projects (
     name TEXT NOT NULL,
     company_id INTEGER REFERENCES companies (id)
 );
-GRANT SELECT, INSERT ON TABLE public.projects TO anonymous;
+GRANT SELECT ON TABLE public.projects TO anonymous;
 GRANT SELECT ON TABLE public.projects TO developer;
 GRANT SELECT, UPDATE ON TABLE public.projects TO quality_assurance;
 GRANT SELECT, UPDATE ON TABLE public.projects TO project_manager;
@@ -48,7 +48,7 @@ GRANT SELECT, INSERT ON TABLE public.users TO anonymous;
 GRANT SELECT ON TABLE public.users TO developer;
 GRANT SELECT ON TABLE public.users TO quality_assurance;
 GRANT SELECT ON TABLE public.users TO project_manager;
-GRANT SELECT ON TABLE public.users TO owner;
+GRANT SELECT, INSERT, DELETE ON TABLE public.users TO owner;
 GRANT SELECT ON TABLE public.users TO business_analyst;
 GRANT SELECT ON TABLE public.users TO project_owner;
 
@@ -82,3 +82,4 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO owner;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO business_analyst;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO project_owner;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO developer;
+GRANT USAGE, SELECT ON users_id_seq IN SCHEMA public TO anonymous;

@@ -77,8 +77,8 @@ WITH CHECK (
   )
 );
 
-DROP POLICY IF EXISTS authorized_access_project_owner ON tasks;
-CREATE POLICY authorized_access_project_owner 
+DROP POLICY IF EXISTS authorized_select_project_owner ON tasks;
+CREATE POLICY authorized_select_project_owner 
 ON tasks
 AS PERMISSIVE
 FOR SELECT

@@ -70,7 +70,7 @@ DROP POLICY IF EXISTS authorized_access_company_owner ON projects;
 CREATE POLICY authorized_access_company_owner
 ON projects
 AS PERMISSIVE
-FOR UPDATE
+FOR ALL
 TO owner
 USING (company_id = ANY (
   (SELECT array_agg(id)

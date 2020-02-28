@@ -21,6 +21,20 @@ WITH CHECK (
   true
 );
 
+DROP POLICY IF EXISTS authorized_insert_owner ON users;
+CREATE POLICY authorized_insert_owner 
+ON users
+AS PERMISSIVE
+FOR INSERT
+TO owner
+WITH CHECK (
+  company_id = ANY (
+    (SELECT array_agg(id)
+    FROM companies
+    WHERE companies.owner_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER) :: INTEGER[]
+  )
+);
+
 DROP POLICY IF EXISTS authorized_access ON users;
 CREATE POLICY authorized_access 
 ON users
