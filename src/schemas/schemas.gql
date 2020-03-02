@@ -1,0 +1,36 @@
+type Query {
+  hello: String
+}
+
+type User {
+  id: Int!
+  companyId: Int!
+  firstname: String!
+  lastname: String!
+  company: Company
+  project: [Project!]
+}
+
+type Company {
+  id: Int!
+  ownerId: Int!
+  name: String!
+  owner: User
+  users: [User!]
+}
+
+type Project {
+  id: Int!
+  companyId: Int!
+  name: String!
+  company: Company
+  users: [User!]
+}
+
+type Task {
+  id: Int!
+  projectId: Int!
+  name: String!
+  status: String!
+  project: Project
+}
