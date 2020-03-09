@@ -16,6 +16,8 @@ export class Database {
       .join("");
   }
   context = new Map();
+  // role = "anonymous";
+  role = "postgres";
 
   static connection = new Pool(pgConfig);
 
@@ -31,9 +33,17 @@ export class Database {
     this.role = role;
   }
 
-  async query(query, values) {
+  async query(query, values, { rawData } = {}) {
     console.log(this.guc, query, values);
-    return Database.connection.query(`${this.guc} ${query};`, values);
+    let result = await Database.connection.query(
+      `${this.guc} ${query};`,
+      values
+    );
+
+    if (!rawData) {
+      result = result[result.length - 1].rows;
+    }
+    return result;
   }
 
   async queryElevated(query, values) {

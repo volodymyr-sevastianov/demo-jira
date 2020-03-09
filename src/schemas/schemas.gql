@@ -1,5 +1,37 @@
 type Query {
   hello: String
+  findUsers: [User]!
+  findCompanies: [Company]!
+  findTasks: [Task]!
+  findProjects: [Project]!
+}
+
+type Mutation {
+  createUser(user: UserInput): User
+  createCompany(company: CompanyInput): Company
+  createProject(project: ProjectInput): Project
+  createTask(task: TaskInput): Task
+}
+
+input UserInput {
+  company_id: Int!
+  firstname: String!
+  lastname: String!
+}
+
+input CompanyInput {
+  owner_id: Int!
+  name: String!
+}
+
+input ProjectInput {
+  company_id: Int!
+  name: String!
+}
+
+input TaskInput {
+  project_id: Int!
+  name: String!
 }
 
 type User {

@@ -3,23 +3,7 @@ import graphqlHTTP from "express-graphql";
 import { buildSchema } from "graphql";
 import schemas from "./schemas/schemas.gql";
 import { Database } from "./db";
-
-const root = {
-  hello: () => {
-    return "Hi!";
-  }
-};
-
-const db = new Database();
-db.setSessionRole("anonymous");
-
-db.query(`SELECT * FROM users;`)
-  .then(result => {
-    console.log(result);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+import resolver from "./resolvers";
 
 const schema = buildSchema(schemas);
 
@@ -28,7 +12,7 @@ app.use(
   "/api",
   graphqlHTTP({
     schema,
-    rootValue: root,
+    rootValue: resolver,
     graphiql: true
   })
 );
