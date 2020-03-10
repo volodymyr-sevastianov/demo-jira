@@ -1,4 +1,4 @@
-const createQueries = db => {
+const createQueries = (db, jwt) => {
   const findUsers = async ({ search, order }, context) => {
     console.log(context.request.headers);
 
@@ -51,11 +51,28 @@ const createQueries = db => {
   `);
   };
 
+  const auth = async ({ email, password }) => {
+    const [user] = await db.query(`
+      SELECT * 
+      FROM users 
+      WHERE email = '${email}' 
+        AND password = '${password}';
+    `);
+    if (!user) throw new Error("Email or password are incorrect.");
+    console.log(user);
+
+    const token = jwt.sign(user, "secret");
+    console.log(token);
+
+    return { token };
+  };
+
   return {
     findUsers,
     findCompanies,
     findProjects,
     findTasks,
+    auth,
     hello: () => {
       return "Hi!";
     }

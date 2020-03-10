@@ -4,6 +4,7 @@ type Query {
   findCompanies: [Company]!
   findTasks: [Task]!
   findProjects: [Project]!
+  auth(email: String!, password: String!): Auth
 }
 
 type Mutation {
@@ -34,6 +35,10 @@ input TaskInput {
   project_id: Int!
   name: String!
   status: String!
+}
+
+type Auth {
+  token: String!
 }
 
 type User {
