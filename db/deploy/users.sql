@@ -4,6 +4,8 @@ BEGIN;
 
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
+  email TEXT UNIQUE,
+  password TEXT,
   firstname TEXT NOT NULL,
   lastname TEXT NOT NULL,
   company_id INTEGER REFERENCES companies (id)

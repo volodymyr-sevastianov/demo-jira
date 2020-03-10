@@ -20,10 +20,12 @@ BEGIN
     RAISE EXCEPTION 'You must supply both firstname and lastname arguments!';
   END IF;
 
-  INSERT INTO public.users(firstname, lastname, company_id)
+  INSERT INTO public.users(firstname, lastname, company_id, email, password)
   VALUES (userObject ->> 'firstname',
           userObject ->> 'lastname',
-          (userObject ->> 'company_id') :: INTEGER) RETURNING *
+          (userObject ->> 'company_id') :: INTEGER,
+          userObject ->> 'email',
+          userObject ->> 'password') RETURNING *
     INTO user;
   
   RETURN user;

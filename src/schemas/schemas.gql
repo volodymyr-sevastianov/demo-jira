@@ -14,13 +14,14 @@ type Mutation {
 }
 
 input UserInput {
-  company_id: Int!
+  company_id: Int
   firstname: String!
   lastname: String!
+  email: String!
+  password: String
 }
 
 input CompanyInput {
-  owner_id: Int!
   name: String!
 }
 
@@ -32,20 +33,23 @@ input ProjectInput {
 input TaskInput {
   project_id: Int!
   name: String!
+  status: String!
 }
 
 type User {
   id: Int!
-  companyId: Int!
+  company_id: Int
   firstname: String!
   lastname: String!
   company: Company
   project: [Project!]
+  email: String
+  password: String
 }
 
 type Company {
   id: Int!
-  ownerId: Int!
+  owner_id: Int
   name: String!
   owner: User
   users: [User!]
@@ -53,7 +57,7 @@ type Company {
 
 type Project {
   id: Int!
-  companyId: Int!
+  company_id: Int!
   name: String!
   company: Company
   users: [User!]
@@ -61,7 +65,7 @@ type Project {
 
 type Task {
   id: Int!
-  projectId: Int!
+  project_id: Int!
   name: String!
   status: String!
   project: Project

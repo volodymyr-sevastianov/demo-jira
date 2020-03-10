@@ -1,5 +1,7 @@
 const createQueries = db => {
-  const findUsers = async (root, { search, order }, context) => {
+  const findUsers = async ({ search, order }, context) => {
+    console.log(context.request.headers);
+
     const whereClause =
       search && search.name
         ? `WHERE firstname ILIKE %${search.name}% or lastname ILIKE %${search.name}%`
