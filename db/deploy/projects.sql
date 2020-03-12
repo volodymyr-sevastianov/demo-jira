@@ -33,10 +33,10 @@ TO developer, quality_assurance
 USING (id = ANY(
   (SELECT array_agg(project_id)
   FROM users_projects
-  WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+  WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+  AND (role = 'developer' OR role = 'quality_assurance'))::INTEGER[]
 ));
 
--- This is wrong. TODO: tables for all roles and PRO checks. SHAKAAAA
 DROP POLICY IF EXISTS authorized_select ON projects;
 CREATE POLICY authorized_select
 ON projects
@@ -46,7 +46,8 @@ TO project_manager, business_analyst
 USING (id = ANY(
   (SELECT array_agg(project_id)
   FROM users_projects
-  WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+  WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+  AND (role = 'project_manager' OR role = 'business_analyst'))::INTEGER[]
 ));
 
 DROP POLICY IF EXISTS authorized_update ON projects;
@@ -58,12 +59,14 @@ TO project_manager, business_analyst
 USING (id = ANY(
   (SELECT array_agg(project_id)
   FROM users_projects
-  WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+  WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+  AND (role = 'project_manager' OR role = 'business_analyst'))::INTEGER[]
 ))
 WITH CHECK (id = ANY(
   (SELECT array_agg(project_id)
   FROM users_projects
-  WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+  WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+  AND (role = 'project_manager' OR role = 'business_analyst'))::INTEGER[]
 ));
 
 DROP POLICY IF EXISTS authorized_access_company_owner ON projects;

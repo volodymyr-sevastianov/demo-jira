@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS users_projects (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users (id),
     project_id INTEGER NOT NULL REFERENCES projects (id),
+    role TEXT NOT NULL,
     is_project_owner BOOLEAN
 );
 GRANT ALL PRIVILEGES ON TABLE public.users_projects TO project_owner;

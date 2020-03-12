@@ -10,6 +10,70 @@ CREATE TABLE IF NOT EXISTS users_projects (
   role TEXT
 );
 
-ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE users_projects ENABLE ROW LEVEL SECURITY;
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'roles') THEN
+    CREATE TYPE roles AS enum ('business_analyst', 'project_owner', 'developer', 'quality_assurance', 'project_manager', 'owner');
+  END IF;
+END
+$$;
+DO $$ 
+    BEGIN
+        BEGIN
+            ALTER TABLE users_projects ADD role roles NOT NULL default 'developer'; 
+        EXCEPTION
+            WHEN duplicate_column THEN RAISE NOTICE 'column role already exists in users_projects.';
+        END;
+    END;
+$$;
+
+DROP POLICY IF EXISTS authorized_access ON users_projects;
+CREATE POLICY authorized_access
+ON users_projects
+AS PERMISSIVE
+FOR ALL
+TO project_manager, business_analyst
+USING (
+  project_id = ANY (
+    (SELECT array_agg(project_id)
+    FROM users_projects
+    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+    AND (role = 'business_analyst' OR role = 'project_manager'))::INTEGER[]
+  )
+)
+WITH CHECK (
+  project_id = ANY (
+    (SELECT array_agg(project_id)
+    FROM users_projects
+    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+    AND (role = 'business_analyst' OR role = 'project_manager'))::INTEGER[]
+  )
+);
+
+DROP POLICY IF EXISTS authorized_access_сompany_owner ON users_projects;
+CREATE POLICY authorized_access_сompany_owner 
+ON users_projects
+AS PERMISSIVE
+FOR ALL
+TO owner
+USING (
+  project_id = ANY (
+    (SELECT array_agg(projects.id)
+    FROM projects, companies
+    WHERE projects.company_id = companies.id
+    AND companies.owner_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+  )
+)
+WITH CHECK (
+  project_id = ANY (
+    (SELECT array_agg(projects.id)
+    FROM projects, companies
+    WHERE projects.company_id = companies.id
+    AND companies.owner_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+  )
+);
+
+
 
 COMMIT;

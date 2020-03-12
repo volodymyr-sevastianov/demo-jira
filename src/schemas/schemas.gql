@@ -9,12 +9,25 @@ type Query {
 
 type Mutation {
   createUser(user: UserInput): User
+  updateUser(user: UserInput): User
+  deleteUser(id: Int): User
+  assignUserToTask(data: AssignUserToTask): UserTask
+  retainUserFromTask(data: AssignUserToTask): UserTask
+  addUserToProject(data: AddUserToProject): UserProject
+  removeUserFromProject(data: AddUserToProject): UserProject
   createCompany(company: CompanyInput): Company
+  updateCompany(company: CompanyInput): Company
+  deleteCompany(id: Int): Company
   createProject(project: ProjectInput): Project
+  updateProject(project: ProjectInput): Project
+  deleteProject(id: Int): Project
   createTask(task: TaskInput): Task
+  updateTask(task: TaskInput): Task
+  deleteTask(id: Int): Task
 }
 
 input UserInput {
+  id: Int
   company_id: Int
   firstname: String!
   lastname: String!
@@ -22,16 +35,32 @@ input UserInput {
   password: String
 }
 
+input AssignUserToTask {
+  id: Int
+  user_id: Int!
+  task_id: Int!
+}
+
+input AddUserToProject {
+  id: Int
+  user_id: Int!
+  project_id: Int!
+  role: String!
+}
+
 input CompanyInput {
   name: String!
+  id: Int
 }
 
 input ProjectInput {
   company_id: Int!
   name: String!
+  id: Int
 }
 
 input TaskInput {
+  id: Int
   project_id: Int!
   name: String!
   status: String!
@@ -48,8 +77,21 @@ type User {
   lastname: String!
   company: Company
   project: [Project!]
-  email: String
+  email: String!
   password: String
+}
+
+type UserProject {
+  id: Int!
+  user_id: Int!
+  project_id: Int!
+  role: String!
+}
+
+type UserTask {
+  id: Int!
+  user_id: Int!
+  task_id: Int!
 }
 
 type Company {

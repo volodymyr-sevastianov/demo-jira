@@ -1,11 +1,8 @@
 import jwt from "jsonwebtoken";
 import createQueries from "./queries/queries";
-import { Database } from "../db";
-import createMutations from "./mutations/mutations";
+import createMutations from "./mutations/index";
 
-const db = new Database();
-
-const queries = createQueries(db, jwt);
-const mutations = createMutations(db);
+const queries = createQueries(jwt);
+const mutations = createMutations();
 
 export default { ...queries, ...mutations };

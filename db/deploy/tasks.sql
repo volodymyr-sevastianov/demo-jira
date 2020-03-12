@@ -29,16 +29,22 @@ FOR UPDATE
 TO developer, quality_assurance
 USING (
   id = ANY (
-    (SELECT array_agg(task_id)
-    FROM users_tasks
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+    (SELECT array_agg(users_tasks.task_id)
+    FROM users_tasks, users_projects
+    WHERE users_tasks.user_id = users_projects.user_id
+    AND ( users_projects.role = 'developer' OR users_projects.role = 'quality_assurance' )
+    AND users_tasks.user_id = NULLIF(current_setting('session.accountID', TRUE), ''):: INTEGER
+    )::INTEGER[]
   )
 )
 WITH CHECK (
   id = ANY (
-    (SELECT array_agg(task_id)
-    FROM users_tasks
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+    (SELECT array_agg(users_tasks.task_id)
+    FROM users_tasks, users_projects
+    WHERE users_tasks.user_id = users_projects.user_id
+    AND ( users_projects.role = 'developer' OR users_projects.role = 'quality_assurance' )
+    AND users_tasks.user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+    )::INTEGER[]
   )
 );
 
@@ -52,7 +58,8 @@ WITH CHECK (
   project_id = ANY (
     (SELECT array_agg(project_id)
     FROM users_projects
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+    AND role = 'quality_assurance')::INTEGER[]
   )
 );
 
@@ -66,14 +73,16 @@ USING (
   project_id = ANY (
     (SELECT array_agg(project_id)
     FROM users_projects
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+    AND (role = 'business_analyst' OR role = 'project_manager'))::INTEGER[]
   )
 )
 WITH CHECK (
   project_id = ANY (
     (SELECT array_agg(project_id)
     FROM users_projects
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER)::INTEGER[]
+    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+    AND (role = 'business_analyst' OR role = 'project_manager'))::INTEGER[]
   )
 );
 

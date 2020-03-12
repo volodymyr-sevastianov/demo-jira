@@ -7,8 +7,11 @@ const pgConfig = {
 };
 
 export class Database {
+  static pool = new Pool(pgConfig);
+
   get guc() {
     this.context.set("role", this.role);
+    console.log(this.context);
 
     return Array.from(this.context)
       .filter(([, value]) => value)
@@ -19,7 +22,13 @@ export class Database {
   // role = "anonymous";
   role = "postgres";
 
-  static connection = new Pool(pgConfig);
+  async connect() {
+    this.connection = await Database.pool.connect();
+  }
+
+  release() {
+    this.connection.release(true);
+  }
 
   setSessionVariable({ name, value }) {
     this.context.set(name, value);
@@ -30,15 +39,12 @@ export class Database {
   }
 
   setSessionRole(role) {
-    this.role = role;
+    this.role = role ? role : this.role;
   }
 
   async query(query, values, { rawData } = {}) {
     console.log(this.guc, query, values);
-    let result = await Database.connection.query(
-      `${this.guc} ${query};`,
-      values
-    );
+    let result = await this.connection.query(`${this.guc} ${query};`, values);
 
     if (!rawData) {
       result = result[result.length - 1].rows;
@@ -47,6 +53,6 @@ export class Database {
   }
 
   async queryElevated(query, values) {
-    return Database.connection.query(`${query};`, values);
+    return this.connection.query(`${query};`, values);
   }
 }

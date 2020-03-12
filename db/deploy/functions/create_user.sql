@@ -32,6 +32,8 @@ BEGIN
 END;
 $$;
 
-GRANT ALL ON FUNCTION create_user(jsonb) TO anonymous; 
+GRANT ALL ON FUNCTION create_user(jsonb) TO anonymous;
+GRANT ALL ON FUNCTION create_user(jsonb) TO owner;
+GRANT ALL ON FUNCTION create_user(jsonb) TO business_analyst;
 
 COMMIT;
