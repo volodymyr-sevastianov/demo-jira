@@ -13,3 +13,4 @@ functions/create_user 2020-02-18T10:00:52Z Volodymyr,,, <volodymyr@relevant-MS-7
 functions/create_copmany 2020-02-28T10:34:51Z Volodymyr,,, <volodymyr@relevant-MS-7B24> # Add function for creating companies
 functions/create_project 2020-02-28T11:42:20Z Volodymyr,,, <volodymyr@relevant-MS-7B24> # Add function for creating projects
 functions/create_task 2020-02-28T12:49:28Z Volodymyr,,, <volodymyr@relevant-MS-7B24> # Add function for creating tasks
+security/security_view 2020-03-12T09:41:21Z Volodymyr,,, <volodymyr@relevant-MS-7B24> # Add view for storing security policies data

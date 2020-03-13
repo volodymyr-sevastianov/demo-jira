@@ -35,6 +35,9 @@ app.use(
       if (!userExists) {
         throw new Error("Your account does not exists!");
       }
+
+      console.log("ROLE", request.params.role);
+
       db.setSessionRole(request.params.role);
       db.setSessionVariable({ name: "session.accountId", value: user.id });
     }

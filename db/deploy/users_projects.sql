@@ -36,18 +36,18 @@ FOR ALL
 TO project_manager, business_analyst
 USING (
   project_id = ANY (
-    (SELECT array_agg(project_id)
-    FROM users_projects
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
-    AND (role = 'business_analyst' OR role = 'project_manager'))::INTEGER[]
+    (SELECT ids
+    FROM security_view sv
+    WHERE sv.id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+    AND sv.operation = 'INSERT' AND sv.operation_table = 'users_projects')::INTEGER[]
   )
 )
 WITH CHECK (
   project_id = ANY (
-    (SELECT array_agg(project_id)
-    FROM users_projects
-    WHERE user_id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
-    AND (role = 'business_analyst' OR role = 'project_manager'))::INTEGER[]
+    (SELECT ids
+    FROM security_view sv
+    WHERE sv.id = NULLIF(current_setting('session.accountID', TRUE), '') :: INTEGER
+    AND sv.operation = 'INSERT' AND sv.operation_table = 'users_projects')::INTEGER[]
   )
 );
 
